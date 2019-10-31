@@ -1,0 +1,86 @@
+@charset "utf-8";
+
+// =========================================================
+// mixin.scss　mixinとか汎用クラス
+// =========================================================
+
+
+
+
+/* 60
+========================================================= */
+
+/* 50　
+----------------------------------------------- */
+
+/* 40　
+------------------------------------- */
+
+//ロゴ
+
+
+a:hover,
+a:hover img {
+		opacity: 0.60;
+		filter: alpha(opacity=60);
+		-ms-filter: "alpha(opacity=60)";
+}
+
+//============================================
+// clearfix
+//============================================
+@mixin clear {
+	*zoom: 1;
+	&:after{
+		display: block;
+		content: "";
+		clear: both;
+	}
+}
+
+
+/* mixin
+========================================================= */
+
+// font-size
+// $size html font-size
+// $base html font-size
+@mixin font($size: 14, $base: 16) {
+	font-size: $size + px;
+	font-size: ($size / $base) * 1rem;
+}
+
+
+//余白調整用のクラス　5px刻みで20回処理を繰り返し
+@for $i from 0 through 20 {
+	.mt#{$i * 5} { margin-top: 5px * $i !important; }
+	.mb#{$i * 5} { margin-bottom: 5px * $i !important; }
+	.ml#{$i * 5} { margin-left: 5px * $i !important; }
+	.mr#{$i * 5} { margin-right: 5px * $i !important; }
+	.pt#{$i * 5} { padding-top: 5px * $i !important; }
+	.pb#{$i * 5} { padding-bottom: 5px * $i !important; }
+	.pl#{$i * 5} { padding-left: 5px * $i !important; }
+	.pr#{$i * 5} { padding-right: 5px * $i !important; }
+}
+
+// Break point
+$bp-s: 640px;
+$bp-m: 960px;
+$bp-l: 1200px;
+
+
+//============================================
+// breakpoint 960
+//============================================
+@mixin mq($breakPoint: $bp-m) {
+	@media (min-width: $breakPoint) {
+		@content;
+	}
+}
+
+@font-face {
+	font-family: 'FontAwesome';
+	font-style: normal;
+	font-weight: 400;
+	src: url(../fonts/fontawesome-webfont.woff);
+}
