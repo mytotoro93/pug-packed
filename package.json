@@ -1,9 +1,9 @@
 {
   "name": "pug-packed",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "packed starter build website with Gulp, Sass and Pug",
   "day-update": "11/01/2019",
-  "update": "Update gulp-data using JSON config title descript class",
+  "update": "Update gulp-data using JSON config title descript class, update babel javascript compile",
   "repository": {
     "url": "https://github.com/mytotoro93/pug-packed"
   },
@@ -19,28 +19,38 @@
     "prod": "gulp prod"
   },
   "keywords": [
-    "gulp",
-    "sass",
-    "pug"
+    "gulp 4",
+    "sass pug",
+    "gulp pug",
+    "gulp babel compile"
   ],
   "author": "Nono-Digital",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
     "autoprefixer": "^9.7.0",
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.26.7",
     "cssnano": "^4.1.10",
     "del": "^5.1.0",
-    "fs": "0.0.1-security",
     "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-changed": "^4.0.2",
+    "gulp-concat": "^2.6.1",
     "gulp-data": "^1.3.1",
+    "gulp-if": "^3.0.0",
     "gulp-imagemin": "^6.1.1",
-    "gulp-merge-json": "^1.3.1",
     "gulp-newer": "^1.4.0",
     "gulp-notify": "^3.2.0",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^8.0.0",
     "gulp-pug": "^4.0.1",
     "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
     "path": "^0.12.7",
     "pug": "^2.0.4"
   },

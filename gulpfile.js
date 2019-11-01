@@ -8,28 +8,37 @@ const gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     pug = require('gulp-pug'),
     data = require('gulp-data'),
-    merge = require('gulp-merge-json'),
-    fs = require('fs'),
+    babel = require('gulp-babel'),
+    concat = require('gulp-concat'),
+    sourcemaps = require('gulp-sourcemaps'),
+    gulpif = require('gulp-if'),
+    uglify = require('gulp-uglify'),
     path = require('path'),
     newer = require('gulp-newer'),
     imagemin = require('gulp-imagemin'),
     notify = require('gulp-notify');
 
+const options = {
+  uglifyJS: true,
+  sourceMaps: true,
+  useBabel: true,
+};
 
 let paths = {
   styles: {
-    src: './assets/scss/layout.scss',
+    src: './assets/scss/*.scss',
     dest: './_dist/assets/css/'
   },
   html: {
     src: './layout/*.pug',
     dest: './_dist/'
   },
-  input: {
+  jsons: {
     src: './data/',
   },
   scripts: {
     src: './assets/js/*.js',
+    lib: './assets/js/lib/*.js',
     dest: './_dist/assets/js/'
   },
   image: {
@@ -65,22 +74,24 @@ function scss() {
   return (
     gulp
       .src(paths.styles.src)
-      .pipe(plumber())
+      .pipe(plumber({errorHandler: notify.onError("Sass Error: <%= error.message %>")}))
       .pipe(sass({outputStyle: 'expanded'}))
-      .on('error', sass.logError)
       .pipe(postcss([autoprefixer(), cssnano()]))
       .pipe(gulp.dest(paths.styles.dest))
-      .pipe(browserSync.stream())
   );
 }
 function scripts() {
-  return (
-    gulp
-      .src(paths.scripts.src)
-      .pipe(plumber())
-      .pipe(gulp.dest(paths.scripts.dest))
-      .pipe(browserSync.stream())
-  );
+  return gulp
+  .src(paths.scripts.src)
+  .pipe(plumber({errorHandler: notify.onError("Babel Error: <%= error.message %>")}))
+  .pipe(gulpif(options.sourceMaps, sourcemaps.init()))
+  .pipe(gulpif(options.useBabel, babel({
+    presets: ['@babel/preset-env']
+  })))
+  .pipe(concat('app.js'))
+  .pipe(gulpif(options.uglifyJS, uglify()))
+  .pipe(gulpif(options.sourceMaps, sourcemaps.write(paths.scripts.dest)))
+  .pipe(gulp.dest(paths.scripts.dest))
 }
 function css() {
   return (
@@ -124,9 +135,9 @@ function images() {
 function pug_src() {
   return gulp
     .src(paths.html.src)
-    .pipe(plumber())
+    .pipe(plumber({errorHandler: notify.onError("PUG Error: <%= error.message %>")}))
     .pipe(data(function (file) {
-      const json = paths.input.src + path.basename(file.path) + '.json';
+      const json = paths.jsons.src + path.basename(file.path) + '.json';
       delete require.cache[require.resolve(json)];
       return require(json);
     }))

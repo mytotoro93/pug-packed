@@ -7,6 +7,7 @@
 ### Description
 
 Simple project to fast-start web-development with Gulp, Pug and Sass.
+Javascript compile use Babel.
 
 ### What`s inside
 This project uses:
@@ -21,6 +22,8 @@ This project uses:
 9. [gulp-sass](https://github.com/dlmanning/gulp-sass) to compile sass files.
 10. [gulp-htmlmin](https://github.com/jonschlinkert/gulp-htmlmin) HTMLMinifier is a highly configurable, well-tested, JavaScript-based HTML minifier..
 11. [gulp-uglify](https://github.com/terinjokes/gulp-uglify/) to minify JavaScript.
+12. [gulp-babel](https://github.com/babel/gulp-babel) to compile ES6 to ES5.
+13. Updating ...
 
 ### Usage
 - Execute `npm install` from base directory to install all dependencies.
@@ -32,8 +35,15 @@ This project uses:
 
 By default this project includes:
 
-- Jquery 3.1.0
+- Jquery
 - Sass
-- Uikit 3
+- Bootstrap
+- Material
+- Carousel
+- Jquery Hotspot
+- Updating ...
 
 If you don`t need something - just delete it.
+
+### Errors
+- Function Babel compile library is still errors. 
