@@ -7,6 +7,10 @@ const gulp = require('gulp'),
     browserSync = require('browser-sync').create(),
     plumber = require('gulp-plumber'),
     pug = require('gulp-pug'),
+    data = require('gulp-data'),
+    merge = require('gulp-merge-json'),
+    fs = require('fs'),
+    path = require('path'),
     newer = require('gulp-newer'),
     imagemin = require('gulp-imagemin'),
     notify = require('gulp-notify');
@@ -20,6 +24,9 @@ let paths = {
   html: {
     src: './layout/*.pug',
     dest: './_dist/'
+  },
+  input: {
+    src: './data/',
   },
   scripts: {
     src: './assets/js/*.js',
@@ -116,14 +123,16 @@ function images() {
 }
 function pug_src() {
   return gulp
-  .src(paths.html.src)
-  .pipe(plumber({errorHandler: notify.onError("PUG Error: <%= error.message %>"),}))
-  .pipe(pug({
-    pretty: true,
-  }))
-  .pipe(gulp.dest(paths.html.dest));
+    .src(paths.html.src)
+    .pipe(plumber())
+    .pipe(data(function (file) {
+      const json = paths.input.src + path.basename(file.path) + '.json';
+      delete require.cache[require.resolve(json)];
+      return require(json);
+    }))
+    .pipe(pug({pretty: true}))
+    .pipe(gulp.dest(paths.html.dest))
 }
-
 function watchFiles() {
   gulp.watch(paths.styles.src, gulp.series(scss, reload));
   gulp.watch(paths.fonts.src, gulp.series(fonts, reload));
@@ -132,10 +141,14 @@ function watchFiles() {
   gulp.watch(paths.html.src, gulp.series(pug_src, reload));
   gulp.watch(paths.image.src, gulp.series(images, reload));
 }
-const build = gulp.series(cleanup, gulp.parallel(scripts, fonts, css, scss, images, pug_src));
+const build = gulp.parallel(scripts, fonts, css, scss, images, pug_src);
 const watch = gulp.series(build, gulp.parallel(watchFiles, browser));
+// Export data with product version, clean all file not use.
+const prod = gulp.series(cleanup, gulp.parallel(scripts, fonts, css, scss, images, pug_src));
 
 exports.cleanup = cleanup;
 exports.watch = watch;
 exports.build = build;
 exports.default = build;
+// Export data with product version, clean all file not use.
+exports.prod = prod;
