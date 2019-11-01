@@ -1,0 +1,104 @@
+/***** Checkbox *****/
+$width: 20px; // width
+$height: 20px; // height
+%checkbox {
+	display: inline-block;
+	position: relative;
+	width: auto;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	input {
+		display: none;
+	}	
+}
+%checkmark {
+	display: inline-block;
+	position: relative;
+	background: $white;
+	border: 1px solid $primary;
+	border-radius: 0;
+	vertical-align: middle;
+	&:after {
+		top: 50%;
+		left: 50%;
+		width: 5px;
+		height: 10px;
+		margin: -7px 0 0 -3px;
+		border: solid white;
+		border-width: 0 1px 1px 0;
+		@include css3-prefix(transform, rotate(45deg));
+	}
+	&:after {
+		content: '';
+		position: absolute;
+		display: none;
+	}
+}
+// Add class name checkbox (small is config: small is name class)
+$checkbox: (
+  small: small,
+	medium: medium,
+	large: large
+);
+// Property CSS Style of checkbox
+$config: (
+  small: (
+		width: $width,
+    height: $height
+  ),
+	medium: (
+		width: $width*1.5,
+		height: $height*1.5,
+	),
+	large: (
+		width: $width*2,
+		height: $height*2,
+	)
+);
+// System Settings Button
+.checkbox {
+	@extend %checkbox;
+	input:checked ~ .checkmark {
+		background: $primary;
+		border: 1px solid $primary;
+		&:after {
+			display: block;
+		}
+	}
+	ruby {
+		display: inline;
+		margin: 0 10px;
+		line-height: 1;
+		vertical-align: middle;
+	}
+	&:last-child ruby {
+		margin: 0 0 0 10px;
+	}
+	.checkmark {
+		@each $key, $value in $checkbox {
+    @if map-has-key($config, $key) {
+      &.#{$value} {
+					width: setCheckbox($config, $key, width);
+					height: setCheckbox($config, $key, height);
+      	}
+			} @else {
+				@warn "The key ´#{$key} isn't defined in the map $config´"
+			}
+		}
+		@extend %checkmark;
+	}
+}
+/***** End Checkbox *****/
+//	Use tag "checkbox" creat a checkbox
+//		<div class="form-group">
+//			<label class="checkbox">
+//				<input type="checkbox" checked="checked">
+//				<span class="checkmark"></span>
+//				<ruby>Red</ruby>
+//			</label>
+//		</div>
+//  Note:
+//    Class "checkbox(default)"

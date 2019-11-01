@@ -1,0 +1,276 @@
+// External Fonts: Using the CSS font-face property, we can easily add fonts in a directory and include all font types. When using font files, different browsers have different compatibility with file types. This mixin helps solve that by using any relevant font file in a directory.
+// Simply include any font files in a directory, and add the “@include” tag in your styles, which will grab all the files from your chosen folder.
+// This mixin will take care defining alternate font format URLs, including odd workarounds necessary for backwards compatibility.
+@mixin font-face($font, $src){
+	font-family: $font;
+  src: url($src);
+}
+
+// Prefix Css3: These days many web developers use PostCSS and Autoprefixer to add vendor prefixes to CSS properties that don’t come with sufficient browser support. However, there are still many developers who rather use Sass for that purpose. You can use the following mixin to add vendor prefixes to any CSS property
+@mixin css3-prefix($prop, $value) {
+   -webkit-#{$prop}: #{$value};
+   -moz-#{$prop}: #{$value};
+   -ms-#{$prop}: #{$value};
+   -o-#{$prop}: #{$value};
+   #{$prop}: #{$value};
+}
+
+// Vertical Centering: Vertical alignment with CSS is hard, as it doesn’t have a property that explicitly lets you vertically align elements. The following mixin contains all the CSS declarations you need to vertically position any HTML element you want.
+@mixin center($position) {
+  position: absolute;
+  @if $position == 'vertical' {
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+  @else if $position == 'horizontal' {
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translate(-50%);
+  }
+  @else if $position == 'both' {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+}
+
+// Mixin Responsive with FONT
+// Have three value font(defauft, min, max)
+@mixin respond-font($responsive, $min, $max: false, $fallback: false) {
+  $responsive-unitless: $responsive / ($responsive - $responsive + 1);
+  $dimension: if(unit($responsive) == 'vh', 'height', 'width');
+  $min-breakpoint: $min / $responsive-unitless * 100;
+  @media (max-#{$dimension}: #{$min-breakpoint}) {
+    font-size: $min;
+  }
+  @if $max {
+    $max-breakpoint: $max / $responsive-unitless * 100;
+    @media (min-#{$dimension}: #{$max-breakpoint}) {
+      font-size: $max;
+    }
+  }
+  @if $fallback {
+    font-size: $fallback;
+  }
+  font-size: $responsive;
+}
+
+// border
+@mixin border($top, $right, $bottom, $left){
+	border-top: $top;
+	border-right: $right;
+	border-bottom: $bottom;
+	border-left: $left;
+}
+
+// Mixin Responsive with IMG
+// Have three value IMG(defauft, min, max)
+@mixin respond-image($responsive, $min, $max: false, $fallback: false) {
+  $responsive-unitless: $responsive / ($responsive - $responsive + 1);
+  $dimension: if(unit($responsive) == 'vh', 'height', 'width');
+  $min-breakpoint: $min / $responsive-unitless * 100;
+  @media (max-#{$dimension}: #{$min-breakpoint}) {
+    max-width: $min;
+  }
+  @if $max {
+    $max-breakpoint: $max / $responsive-unitless * 100;
+    @media (min-#{$dimension}: #{$max-breakpoint}) {
+      max-width: $max;
+    }
+  }
+  @if $fallback {
+    max-width: $fallback;
+  }
+  max-width: $responsive;
+}
+
+// Push auto: To quickly centre a block element without having to worry about if there is any top or bottom margin already applied.
+@mixin push--auto {
+	margin: { 
+		left: auto;
+		right: auto;
+	}
+}
+
+// Pseudo: When using ::before and ::after you'll always need these three, so we're saving two lines of code every time you use this.
+@mixin pseudo($display: block, $pos: absolute, $content: ''){
+	content: $content;
+	display: $display;
+	position: $pos;
+}
+
+// Responsive ratio: We use this for creating scalable elements (usually images / background images) that maintain a ratio.
+@mixin responsive-ratio($x,$y, $pseudo: false) {
+	$padding: unquote( ( $y / $x ) * 100 + '%' );
+	@if $pseudo {
+		&:before {
+			@include pseudo($pos: relative);
+			width: 100%;
+			padding-top: $padding;
+		}
+	} @else {
+		padding-top: $padding;
+	}
+}
+
+// CSS triangles: This mixin takes all the hassle out of creating that triangle you'll see coming out of most traditional tooltips, all without images, you just specify it's colour, how big you want it, the direction it's going to come out of your element and you're done!
+@mixin css-triangle($color, $direction, $size: 6px, $position: absolute, $round: false){
+	@include pseudo($pos: $position);
+	width: 0;
+	height: 0;
+	@if $round {
+		border-radius: 3px;
+	}
+	@if $direction == down {
+		margin-top: 0 - round( $size / 2.5 );
+		border-left: $size solid transparent;
+		border-right: $size solid transparent;
+		border-top: $size solid $color;
+	} @else if $direction == up {
+		margin-bottom: 0 - round( $size / 2.5 );
+		border-left: $size solid transparent;
+		border-right: $size solid transparent;
+		border-bottom: $size solid $color;
+	} @else if $direction == right {
+		margin-right: -$size;
+		border-top: $size solid transparent;
+		border-bottom: $size solid transparent;
+		border-left: $size solid $color;
+	} @else if  $direction == left {
+		margin-left: -$size;
+		border-top: $size solid transparent;
+		border-bottom: $size solid transparent;
+		border-right: $size solid $color;
+	}
+}
+
+// Font styles: Take the pain out of setting styles for a font. (This assumes you have already included the font), set your fallback font once and you never have to worry again.
+@mixin font-source-sans($size: false, $colour: false, $weight: false,  $lh: false) {
+	font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+	@if $size { font-size: $size; }
+	@if $colour { color: $colour; }
+	@if $weight { font-weight: $weight; }
+	@if $lh { line-height: $lh; }
+}
+
+// Placeholders: They're a pain as you have to set the style in all the separate formats, this sorts it for you.
+@mixin placeholder {
+	&.placeholder { @content; }
+	&:-moz-placeholder { @content; }
+	&::-moz-placeholder { @content; }
+	&:-ms-input-placeholder { @content; }
+	&::-webkit-input-placeholder { @content; }
+}
+
+// Z-index: While technically this is just a pure function, but I felt it's worth being on the list as it's so easy to loose track of your z-index values when working in several different files, so we created this so that we could store them in one place for easy editing/recording. Just place this snippet in your main variables/settings.scss file (needs to be imported before any of your other files that reference a x-index of course).
+// Then where ever you're wanting to use a z-index value, name it the same as your class and add in it into your variables/setting file, like below. You'll never have a "z-index: 99999999;" headache again.
+@function z($name) {
+	@if index($z-indexes, $name) {
+		@return (length($z-indexes) - index($z-indexes, $name)) + 1;
+	} @else {
+		@warn 'There is no item "#{$name}" in this list; choose one of: #{$z-indexes}';
+		@return null;
+	}
+}
+$z-indexes: (
+	"outdated-browser",
+	"modal",
+	"site-header",
+	"page-wrapper",
+	"site-footer"
+);
+//	.site-header {
+//  	z-index: z('site-header');
+//	}
+
+// Hardware: Simple and effective for when you need to trigger hardware acceleration for some animation, keeping everything fast, slick and flicker-free.
+@mixin hardware($backface: true, $perspective: 1000) {
+	@if $backface {
+		backface-visibility: hidden;
+	}
+	perspective: $perspective;
+}
+
+// Truncate: Adding Truncation to an element isn't as simple as it should be, although it is with this handy time saver, meaning when you include the mixin, you only have to specify your boundry with a max width value, happy days!
+@mixin truncate($truncation-boundary) {
+	max-width: $truncation-boundary;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+// Arrow with four optional directions: Even if an arrow is not the most spectacular part of a web page, we frequently need to use it. And, it’s not that easy to create it with CSS, as you need to use a certain technique that can be hard to remember. This mixin helps you quickly create an arrow with CSS. You can choose from four directions (up, down, left, right) and set the size and color of the arrow.
+@mixin arrow($direction: down, $size: 5px, $color: #555) {
+ width: 0;
+ height: 0;
+ @if ($direction == left) {
+	border-top: $size solid transparent;
+	border-bottom: $size solid transparent; 
+	border-right: $size solid $color;
+ }
+ @else if ($direction == right) {
+	border-top: $size solid transparent;
+	border-bottom: $size solid transparent; 
+	border-left: $size solid $color;
+ }
+ @else if ($direction == down) {
+	border-left: $size solid transparent;
+	border-right: $size solid transparent;
+	border-top: $size solid $color;
+ }
+ @else {
+	border-left: $size solid transparent;
+	border-right: $size solid transparent;
+	border-bottom: $size solid $color;
+ }
+}
+
+// Quick Gradients: Easily add gradients defining only start color, end color, and gradient type. Add all the gradient properties and you can choose as needed. The gradient type allows you to choose from a vertical gradient, horizontal gradient, or a radial (sphere shaped) gradient.
+// No longer will you have to remember the various vendor prefixes and parameter orders for implementing gradients.
+@mixin background-gradient($start-color, $end-color, $orientation) { 
+	background: $start-color;
+	@if $orientation == 'vertical' {
+		background: -webkit-linear-gradient(top, $start-color, $end-color);
+		background: linear-gradient(to bottom, $start-color, $end-color);
+	} @else if $orientation == 'horizontal' {
+		background: -webkit-linear-gradient(left, $start-color, $end-color);
+		background: linear-gradient(to right, $start-color, $end-color);
+	} @else {
+		background: -webkit-radial-gradient(center, ellipse cover, $start-color, $end-color);
+		background: radial-gradient(ellipse at center, $start-color, $end-color);
+	}
+}
+
+// Retina-ready images: Here is a great Sass mixin for supporting retina-ready images you can serve to Apple devices with a Retina Display. To use this mixin, you need to provide two versions of the same image, one in single size (1x) and one in double size (2x). You can use this mixin to provide a retina-ready background image for any HTML element.
+@mixin retina-image($image, $width, $height) {
+ @media (min--moz-device-pixel-ratio: 1.3),
+ (-o-min-device-pixel-ratio: 2.6/2),
+ (-webkit-min-device-pixel-ratio: 1.3),
+ (min-device-pixel-ratio: 1.3),
+ (min-resolution: 1.3dppx) {
+	 background-image: url($image);
+	 background-size: $width $height;
+ }
+}
+//	.className {
+//		background: url("my-image.png") no-repeat;
+//		@include retina-image("my-image2x.png", 1000px, 500px);
+//	}
+
+// Keyframe animations: You can create beautiful animations with CSS using the @keyframes rule. Mastering animations is not easy by any means. Even if you are a pro, the syntax can be still hard to remember. The following keyframes mixin makes use of the @content directive that allows you to pass a bunch of CSS rules to the mixin.
+@mixin keyframes($name) {
+ @-webkit-keyframes #{$name} {
+ 	@content;
+ }
+ @-moz-keyframes #{$name} {
+ 	@content;
+ }
+ @keyframes #{$name} {
+	@content;
+ }
+}

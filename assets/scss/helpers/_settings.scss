@@ -1,0 +1,35 @@
+$border: yes; // {yes || no}
+$border-number: 1; // The number of border.
+
+$border-radius: yes; // {yes || no}
+$border-radius-number: 1; // The number of border-radius.
+
+$style: yes; // {yes || no}
+
+$location: left; // {top || right || bottom || left}
+
+$icon: yes; // {yes || no}
+$icon-background: $primary; // Color of icon {$primary}
+
+$color: $primary; // Color of text {$primary}
+
+$background: $primary; // Color of background {$primary}
+
+$width: 1; // {px}
+$height: 1; // {px}
+
+$margin: 1; // {px}
+$padding: 1; // {px}
+
+$respond: default;  // Responsive
+$respond-number: 320px; // The number of respond
+
+$hover: yes; // {yes || no}
+$focus: yes; // {yes || no}
+$active: yes; // {yes || no}
+$placeholder: yes; // {yes || no}
+
+$after: 1; // {yes || no}
+$before: 1; // {yes || no}
+
+$col: 1; // The number of col

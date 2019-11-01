@@ -1,0 +1,81 @@
+/***** Form *****/
+.form-horizontal, .form-vertical {
+	.label-title {
+		display: inline-block;
+		position: relative;
+		font-weight: normal;
+		line-height: initial;
+		text-align: left;
+		color: $black;
+		vertical-align: middle;
+		span {
+			font-size: .87em;
+		}
+	}
+}
+.form-horizontal {
+	.label-title {
+		width: 150px;
+		@include respond-to(large) {
+			width: 100%;
+			margin-bottom: 5px;
+		}
+	}
+}
+.form-vertical {
+	.label-title {
+		width: 100%;
+		margin-bottom: 5px;
+	}
+	input,.select-wrapper {
+		width: 100%;
+		box-sizing: border-box;
+	}
+	span.message {
+		&.error-message {
+			margin: 5px 0 0 0;
+		}
+	}
+}
+.form-group {
+	margin: 0 0 15px 0;
+	vertical-align: top;
+}
+.form-col {
+	display: inline-block;
+	width: calc(100% / 2 - 1%);
+	margin: 0 2% 15px 0;
+	&:nth-child(2n + 2) {
+		margin: 0 0 15px 0;
+	}
+	@include respond-to(large) {
+		display: block;
+		width: 100%;
+		margin: 0 0 15px 0;
+	}
+}
+// Required Information
+.required {
+	position: relative;
+	&::after {
+		content: '*';
+		position: absolute;
+		top: 0;
+		right: auto;
+		margin-left: 5px;
+	}
+}
+// Alert Message
+span.message {
+	display: none;
+	&.error-message {
+		display: block;
+		margin: 5px 0 0 150px;
+		font-size: .75em;
+		color: $alert-danger;
+		@include respond-to(large) {
+			margin: 5px 0 0 0;
+		}
+	}
+}
+/***** End Form *****/

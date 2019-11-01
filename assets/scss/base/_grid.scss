@@ -1,0 +1,21 @@
+/***** Grid *****/
+.container {
+  width: 1024px;
+	@include push--auto();
+	@include respond-to(large) {
+		width: auto;
+		margin: 0 15px;
+	}
+}
+@for $i from 2 through 6 {
+	.col-#{$i} {
+		display: inline-block;
+		float: left;
+		width: calc(100% / #{$i});
+		@include respond-to(large) {
+			float: inherit;
+			width: calc(100%);
+		}
+	}
+}
+/***** End Grid *****/

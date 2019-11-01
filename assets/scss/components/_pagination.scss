@@ -1,0 +1,30 @@
+/***** Pagination *****/
+.pagination {
+	text-align: center;
+	word-spacing: -.26em;
+	a {
+		display: inline-block;
+		padding: 8px 16px;
+		&:hover {
+			background: $primary;
+			color: $white;
+		}
+		&.active {
+			background: $primary;
+			color: $white;
+		}
+	}
+}
+/***** End Pagination *****/
+//	Use tag "pagination" creat a pagination
+//		<div class="pagination">
+//			<a href="#">&laquo;</a>
+//			<a href="#">1</a>
+//			<a href="#">2</a>
+//			<a href="#">3</a>
+//			<a href="#">4</a>
+//			<a href="#">5</a>
+//			<a href="#">&raquo;</a>
+//		</div>
+//  Note:
+//    Class "alert(default) type"

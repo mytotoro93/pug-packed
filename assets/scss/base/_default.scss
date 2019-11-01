@@ -1,0 +1,49 @@
+/***** Default *****/
+// Import Variables
+@import "../helpers/functions";
+@import "../helpers/media";
+@import "../helpers/mixins";
+@import "../helpers/settings";
+@import "../helpers/variables";
+form {word-spacing: -.26em;}
+@each $class, $property, $value in
+// text align
+(text-center,text-align,center),
+(text-left,text-align,left),
+(text-right,text-align,right),
+// float
+(pull-left,float,left),
+(pull-right,float,right) {
+	.#{$class} {#{$property}: #{$value} !important}
+}
+@for $i from 1 through 10 {.mb-#{$i * 5} { margin-bottom: 5px * $i !important;}}
+@for $i from 1 through 10 {.mr-#{$i * 5} { margin-right: 5px * $i !important;}}
+@for $i from 1 through 10 {.padding-top-bottom-#{$i * 5} { padding: 5px * $i 0 !important;}}
+@for $i from 1 through 50 {.width-#{$i * 10} { width: 10px * $i!important;}}
+.clearfix {
+  *zoom: 1;
+  &:before, &:after {
+    content: '';
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+%right {
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+%left {
+	-webkit-transform: rotate(135deg);
+	transform: rotate(135deg);
+}
+%up {
+	-webkit-transform: rotate(-135deg);
+	transform: rotate(-135deg);
+}
+%down {
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+/***** End Default *****/

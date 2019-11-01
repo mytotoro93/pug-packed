@@ -1,0 +1,88 @@
+/***** Text Link *****/
+.textlink {
+	display: inline-block;
+	position: relative;
+	padding: 0;
+	color: $primary;
+	span {
+		display: inline;
+		&:first-child{display: none;}
+		&::before {
+			content: '';
+			position: absolute;
+			top: 50%;
+			right: 0;
+			margin: -3px 2px 0 0;
+			padding: 3px;
+			border: solid $primary;
+			border-width: 0 1px 1px 0;
+			@include css3-prefix(transform, rotate(-45deg));
+		}
+	}
+	&:hover {
+		color: $primary;
+		@extend %under;
+		&::before {
+			border: solid $primary;
+			border-width: 0 1px 1px 0;
+			text-decoration: underline;
+		}
+		@include respond-to(ie) {
+			text-decoration: underline;
+		}
+	}
+}
+%fancy {
+  -webkit-text-decoration: $primary double underline;
+  text-decoration: $primary double underline;
+}
+%wavy {
+  text-decoration: underline;
+  -webkit-text-decoration-color: $primary;
+  text-decoration-color: $primary;
+  -webkit-text-decoration-style: wavy;
+  text-decoration-style: wavy;
+}
+%strike {
+  -webkit-text-decoration-color: $primary;
+  text-decoration-color: $primary;
+  -webkit-text-decoration-line: line-through;
+  text-decoration-line: line-through;
+}
+%ink {
+  -webkit-text-decoration: $primary solid underline;
+  text-decoration: $primary solid underline;
+  -webkit-text-decoration-skip: ink;
+  text-decoration-skip: ink;
+}
+%auto {
+  -webkit-text-decoration: $primary solid underline;
+  text-decoration: $primary solid underline;
+  -webkit-text-underline-position: auto;
+  text-underline-position: auto;
+}
+%under {
+  -webkit-text-decoration: $primary solid underline;
+  text-decoration: $primary solid underline;
+  -webkit-text-underline-position: under;
+  text-underline-position: under;
+}
+%super {
+	cursor: pointer;
+  -webkit-text-decoration: $primary solid overline;
+  text-decoration: $primary solid overline;
+  -webkit-text-decoration-skip: objects;
+  text-decoration-skip: objects;
+	span {
+		display: inline-block;
+	}
+}
+//	<a class="super">
+//		Getting <span>Very</span> Fancy
+//	</a>
+/***** End Text Link *****/
+//	<a href="#" class="texlin">
+//		<span>&nbsp;&nbsp;&nbsp;</span>
+//		view more
+//		<span>&nbsp;&nbsp;&nbsp;</span>
+//	</a>

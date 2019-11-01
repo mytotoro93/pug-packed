@@ -1,6 +1,20 @@
 header.header
-
-  .l-wrapper
-
-    h1.header-logo
-      a.header-logo-link(href="./") App name
+  .navbar
+    .logo
+      a(href='#0')
+        img(src='assets/images/logo.svg' alt='Logo')
+    nav.navbar-header
+      a.nav-trigger(href='#navigation')
+        span
+          em(aria-hidden='true')
+      ul#navigation
+        li
+          a(href='#') The team
+        li
+          a(href='#') Our Products
+        li
+          a(href='#') Our Services
+        li
+          a(href='#') Shopping tools
+        li
+          a(href='#') Contact Us

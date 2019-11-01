@@ -1,0 +1,15 @@
+/***** Fonts *****/
+//@font-face
+//	Note:
+//		@include font-face(open-sans, OpenSans-Light)
+//		div {
+//    		font-family: value 1;
+//		}
+// Import Variables
+@import "../helpers/mixins";
+$font: 'open-sans';
+$font-style-1: $font, sans-serif;
+@font-face {
+    @include font-face($font, '../fonts/OpenSans-Light.ttf');
+}
+/***** End Fonts *****/

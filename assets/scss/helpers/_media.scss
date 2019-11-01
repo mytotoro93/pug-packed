@@ -1,0 +1,49 @@
+// Media queries: A massive time saver! You can just use pixel values but we have some default breakpoints setup that work too, another time saver while keeping your breakpoints consistent.
+@mixin respond-to($media) {
+	// Variables of responsive
+	$break-default: 0px;
+	$break-extrasmall: 320px;
+	$break-small: 768px;
+	$break-medium: 992px;
+	$break-large: 1024px;
+	$break-extralarge: 1200px;
+	@if $media == default {
+		// The biggest is 0px
+		@media only screen and (max-width: $break-default + $respond-number) { @content; }
+	} @if $media == extra-small {
+		// The biggest is 320px
+		@media only screen and (max-width: $break-extrasmall) { @content; }
+	}
+	@else if $media == small {
+		// The small is 768
+		@media only screen and (max-width: $break-small - 1) { @content; }
+	}
+	@else if $media == medium {
+		// The small is 991
+		@media only screen and (max-width: $break-medium - 1) { @content; }
+	}
+	@else if $media == large {
+		// The small is 1024px
+		@media only screen and (max-width: $break-large - 1) { @content; }
+	}
+	@else if $media == extra-large {
+		// The small is 1200px
+		@media only screen and (max-width: $break-extralarge) { @content; }
+	}
+	@else if $media == medium-screens {
+		// The small is 321px, The biggest is 1023px.
+		@media only screen and (min-width: $break-extrasmall) and (max-width: $break-large - 1) { @content; }
+	}
+	@else if $media == webkit {
+		// The hack css Chorme and Safari.
+		@media screen and (-webkit-min-device-pixel-ratio:0) { @content; }
+	}
+	@else if $media == moz {
+		// The hack css firefox.
+		@-moz-document url-prefix() { @content; }
+	}
+	@else if $media == ie {
+		// The hack css ei.
+		@media screen and (min-width:0\0) { @content; }
+	}
+}

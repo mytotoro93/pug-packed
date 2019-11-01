@@ -1,0 +1,69 @@
+/***** Input *****/
+$nuRadius: 3px; // border-radius
+$size: 5px; // size
+$respond: default; // Responsive
+$px: 520px; // Responsive
+// The input alike
+%input {
+	display: inline-block;
+	position: relative;
+	width: calc(100% - 162px);
+	margin: 0;
+	border: 1px solid $primary;
+	border-radius: 0;
+  font-family: $font-style-1;
+  font-weight: normal;
+	text-align: left;
+  outline: none;
+	cursor: pointer;
+	vertical-align: middle;
+}
+// Add class name input (small is config: small is name class)
+$input: (
+  small: small,
+	medium: medium,
+	large: large
+);
+// Property CSS Style of input
+$config: (
+  small: (
+		padding: $size,
+    font-size: 14px
+  )
+);
+// System Settings input
+input.input {
+  @each $key, $value in $input {
+    @if map-has-key($config, $key) {
+      &.#{$value} {
+        width: setInput($config, $key, width);
+        height: setInput($config, $key, height);
+        padding: setInput($config, $key, padding);
+        font-size: setInput($config, $key, font-size);
+      }
+    } @else {
+      @warn "The key ´#{$key} isn't defined in the map $config´"
+    }
+  }
+	@extend %input;
+	&::placeholder {
+		color: $primary;
+	}
+	&:focus {
+		border-color: $secondary;
+	}
+	@include respond-to(large) {
+		display: block;
+		width: calc(100% - 12px);
+		margin: 0;
+	}
+}
+/***** End Input *****/
+//	Use tag "input" creat a input
+//		<div class="form-group col">
+//			<label class="required">Input</label>
+//			<input type="text" class="input nameClass">
+//			<span class="error-message">This is error!</span>
+//		</div>
+//  Note:
+//    Class "input(default) size color"

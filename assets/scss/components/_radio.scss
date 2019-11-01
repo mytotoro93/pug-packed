@@ -1,0 +1,100 @@
+/***** Radio *****/
+$width: 20px; // width
+$height: 20px; // height
+%radio {
+	display: inline-block;
+	position: relative;
+	width: auto;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	input {
+    display: none;
+	}
+}
+%radiomark {
+	display: inline-block;
+	position: relative;
+	background: $white;
+	border: 1px solid $primary;
+	border-radius: 50%;
+	vertical-align: middle;
+	box-sizing: border-box;
+	&:after {
+		width: 8px;
+		height: 8px;
+		background: white;
+		border-radius: 50%;
+		@include center(both);
+	}
+	&:after {
+		content: "";
+		position: absolute;
+		display: none;
+	}
+}
+// Add class name radio (small is config: small is name class)
+$radio: (
+  small: small,
+	medium: medium,
+	large: large
+);
+// Property CSS Style of radio
+$config: (
+  small: (
+		width: $width,
+    height: $height
+  ),
+	medium: (
+		width: $width*1.5,
+		height: $height*1.5,
+	),
+	large: (
+		width: $width*2,
+		height: $height*2,
+	)
+);
+// System Settings Button
+.radio {
+	@extend %radio;
+	input:checked ~ .radiomark {
+		background: $primary;
+		border: 1px solid $primary;
+		&:after {
+		 display: block;
+		}
+	}
+	ruby {
+		display: inline-block;
+		margin: 0 10px;
+		vertical-align: middle;
+		line-height: 1;
+	}
+	&:last-child ruby {
+		margin: 0 0 0 10px;
+	}
+	.radiomark {
+		@each $key, $value in $radio {
+    @if map-has-key($config, $key) {
+      &.#{$value} {
+					width: setRadio($config, $key, width);
+					height: setRadio($config, $key, height);
+      	}
+			} @else {
+				@warn "The key ´#{$key} isn't defined in the map $config´"
+			}
+		}
+		@extend %radiomark;
+	}
+}
+/***** End Radio *****/
+//	Use tag "radio" creat a radio
+//		<div class="form-group">
+//			<label class="radio"><ruby>Radio 01</ruby>
+//			<input type="radio" checked="checked" name="radio">
+//			<span class="radiomark small"></span> </label>
+//		</div>
+//  Note:
+//    Class "radio(default) size color"

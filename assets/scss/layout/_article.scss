@@ -1,0 +1,37 @@
+/***** Article *****/
+$col: 1;
+article {
+	@if $col == 2 {
+		float: left;
+		width: 75%;
+		@include respond-to(large) {
+			float: inherit;
+			width: calc(100%);
+			margin: 0;
+		}
+	}
+}
+aside {
+	@if $col == 2 {
+		float: right;
+		width: 25%;
+		@include respond-to(large) {
+			float: inherit;
+			width: calc(100%);
+			margin: 0;
+		}
+	}
+}
+.region {
+	padding: 15px 0;
+	&:last-child {margin: 0;}
+	// Continue region...
+	&.region-1 {background: $secondary;}
+}
+.widget {
+	margin: 0 0 15px 0;
+	&:last-child {margin: 0;}
+	// Continue widget...
+	&.widget-1 {background: $secondary;}
+}
+/***** End Article *****/

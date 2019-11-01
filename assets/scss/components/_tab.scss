@@ -1,0 +1,32 @@
+.tabs-list {
+	margin: 0;
+	padding: 0;
+	word-spacing: -.26em;
+	li {
+		display: inline-block;
+		position: relative;
+		width: calc(100% / 3);
+		padding: 10px 0;
+		background: $primary;
+		text-align: center;
+		color: $white;
+		@include css3-prefix(transition,all .2s ease);
+		&.active {
+			background: $secondary;
+			color: #1a1a1a;
+		}
+		&:hover {
+			background: $secondary;
+			color: #1a1a1a;
+			cursor: pointer;
+		}
+	}
+}
+.tab-content > div {
+	padding: 50px;
+	border-right: 1px solid $primary;
+	border-bottom: 1px solid $primary;
+	border-left: 1px solid $primary;
+	background: #fff;
+	color: #333333;
+}

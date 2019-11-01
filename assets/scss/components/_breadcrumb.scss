@@ -1,0 +1,36 @@
+/***** Breadcrumb *****/
+.breadcrumb {
+	padding: 10px 0;
+	overflow: hidden;
+	li {
+		padding: 0;
+		float: left;
+		line-height: 1;
+		a {
+			color: $primary;
+			line-height: 1;
+		}
+		&:first-child {
+			padding: 0;
+		}
+		&:last-child {
+			color: $font-black;
+			&:after {
+				display: none;
+			}
+		}
+		&:after {
+			content: "/\00a0";
+			padding: 0 5px;
+    	color: $primary;
+		}
+	}
+}
+/***** End Breadcrumb *****/
+//	Use tag "breadcrumb" creat a breadcrumb
+//		<ul class="breadcrumb">
+//			<li><a href="#">Home</a></li>
+//			<li><a href="#">Private</a></li>
+//			<li><a href="#">Pictures</a></li>
+//			<li class="active">Vacation</li>        
+//		</ul>

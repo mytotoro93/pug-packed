@@ -1,0 +1,99 @@
+/***** Table *****/
+table.vertical {
+	width: 100%;
+	margin: 0;
+  padding: 0;
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+	table-layout: fixed;
+	@include respond-to(large) {
+		border: 0;
+	}
+	thead {
+		tr {
+			background: $primary;
+			th {
+				color: $white;
+			}
+		}
+		@include respond-to(large) {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			margin: -1px;
+			padding: 0;
+			border: none;
+			overflow: hidden;
+			clip: rect(0 0 0 0);
+		}
+	}
+	tr {
+		border: 1px solid $primary;
+		background: $white;
+		@include respond-to(large) {
+			display: block;
+			margin-bottom: 10px;
+			border-bottom: 1px solid $primary;
+		}
+		&:last-child {
+			@include respond-to(large) {
+				margin-bottom: 0;
+			}
+		}
+		th, td {
+			padding: 10px;
+			border: 1px solid $primary;
+			text-align: center;
+			box-sizing: border-box;
+			vertical-align: middle;
+			@include respond-to(large) {
+				border: none;
+				border-bottom: 1px solid $primary;
+			}
+			@include respond-to(small) {
+				border: none;
+				border-bottom: 1px solid $primary;
+				text-align: left;
+			}
+		}
+		th {}
+		td {
+			@include respond-to(large) {
+				display: block;
+				text-align: right;
+				&::before {
+					content: attr(data-label);
+					float: left;
+					color: $primary;
+					@include respond-to(small) {
+						display: block;
+						float: inherit;
+					}
+				}
+				&:last-child {
+					border-bottom: 0;
+				}
+			}
+		}
+	}
+}
+table.horizontal {
+	width: 100%;
+	margin: 0;
+  padding: 0;
+  border-collapse: collapse;
+	table-layout: fixed;
+	tr {
+		th, td {
+			padding: 10px;
+			border: 1px solid $primary;
+			box-sizing: border-box;
+			vertical-align: middle;
+		}
+		th {
+			text-align: left;
+		}
+		td {}
+	}
+}
+/***** End Table *****/

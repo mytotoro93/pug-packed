@@ -3,5 +3,6 @@
   "description": "Gulp / Pug / Sass Boilerplate",
   "author": "Nono Digital",
   "content": "Starter Boilerplate",
-  "classes": "index"
+  "classes": "index",
+  "lang": "en"
 }

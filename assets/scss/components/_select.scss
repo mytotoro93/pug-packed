@@ -1,0 +1,98 @@
+/***** Select *****/
+$size: 5px; // size
+$respond: default; // Responsive
+$px: 520px; // Responsive
+.select-wrapper {
+	display: inline-block;
+	position: relative;
+	width: calc(100% - 150px);
+	&:after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		right: 15px;
+		margin-top: -5px;
+		padding: 3px;
+		border: solid $primary;
+		border-width: 0 1px 1px 0;
+		transform: rotate(45deg);
+		pointer-events: none;
+	}
+	&:before {
+		content: '';
+		display: block;
+		position: absolute;
+		pointer-events: none;
+	}
+	&:focus-within  {
+		&:after {
+			content: '';
+			border-color: $secondary;
+		}
+	}
+	@include respond-to(large) {
+		width: 100%;
+		margin: 0;
+	}
+}
+// The select alike
+%select {
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	margin: 0;
+	border: 1px solid $primary;
+	border-radius: 0;
+  font-family: $font-style-1;
+  font-weight: normal;
+	text-align: left;
+  outline: none;
+	cursor: pointer;
+	vertical-align: middle;
+}
+// Add class name select (small is config: small is name class)
+$select: (
+  small: small,
+	medium: medium,
+	large: large
+);
+// Property CSS Style of select
+$config: (
+  small: (
+		padding: $size $size*6 $size $size,
+    font-size: 14px
+  )
+);
+// System Settings select
+select.select {
+  @each $key, $value in $select {
+    @if map-has-key($config, $key) {
+      &.#{$value} {
+        width: setInput($config, $key, width);
+        height: setInput($config, $key, height);
+        padding: setInput($config, $key, padding);
+        font-size: setInput($config, $key, font-size);
+      }
+    } @else {
+      @warn "The key ´#{$key} isn't defined in the map $config´"
+    }
+  }
+	@extend %select;
+	&:focus {
+		border-color: $secondary;
+	}
+	@include respond-to(large) {
+		display: block;
+		width: calc(100%);
+		margin: 0;
+	}
+}
+/***** End Select *****/
+//Use tag "select" creat a select
+//		<div class="form-group col">
+//			<label class="required">Select</label>
+//			<select type="text" class="select nameClass">
+//			<span class="error-message">This is error!</span>
+//		</div>
+//  Note:
+//    Class "select(default) size color"

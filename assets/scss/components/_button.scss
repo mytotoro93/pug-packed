@@ -1,0 +1,144 @@
+/***** Button *****/
+$nuRadius: 0; // border-radius
+$size: 5px; // size
+$respond: default; // Responsive
+$respond-number: 520px; // Responsive
+@each $class, $backgorund, $border, $color in 
+(primary, $primary, $primary, $white),
+(secondary, $secondary, $secondary, $white) {
+  .button.#{$class} {
+    background: #{$backgorund};
+		border: 1px solid #{$border};
+    color: #{$color};
+  }
+}
+// The buttons alike
+%button {
+	display: inline-block;
+	position: relative;
+	margin: 0;
+	padding: $size*2 $size*6 $size*2 $size*6;
+	border: 0;
+	border-radius: $nuRadius;
+  font-family: $font-style-1;
+  font-weight: normal;
+	text-align: center;
+	outline: none;
+	cursor: pointer;
+	text-transform: uppercase;
+  text-decoration: none;
+	vertical-align: middle;
+	&:before {
+		display: flex;
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		background: rgba(0,0,0,0.05);
+		border-radius: $nuRadius 0 0 $nuRadius;
+		line-height: inherit;
+		justify-content: center;
+		align-items: center;
+	}
+	&:after {
+		content: '';
+		position: absolute;
+	}
+}
+// Button have icon
+%i {
+	position: absolute;
+	top: 50%;
+	margin-top: -5px;
+	border: solid $white;
+	border-width: 0 1px 1px 0;
+}
+// Status is disabled of button
+%disabled {
+  cursor: not-allowed;
+  filter: alpha(opacity=65);
+  box-shadow: none;
+  opacity: .65;
+}
+// Add class name button (small is config: small is name class)
+$button: (
+  small: small,
+	medium: medium,
+	large: large
+);
+// Property CSS Style of button
+$config: (
+  small: (
+    font-size: 12px
+  ),
+	medium: (
+    font-size: 13px
+  ),
+	large: (
+    font-size: 14px
+  ),
+);
+// System Settings Button
+.button {
+  @each $key, $value in $button {
+    @if map-has-key($config, $key) {
+      &.#{$value} {
+        width: setButton($config, $key, width);
+        height: setButton($config, $key, height);
+				margin: setButton($config, $key, margin);
+        padding: setButton($config, $key, padding);
+        font-size: setButton($config, $key, font-size);
+      }
+    } @else {
+      @warn "The key ´#{$key} isn't defined in the map $config´"
+    }
+  }
+	@extend %button;
+	&:hover {
+		background: $primary;
+		border: 1px solid $primary;
+	}
+	&:active {
+		background: $primary;
+		border: 1px solid $primary;
+	}
+	&.disabled {
+		@extend %disabled;
+	}
+}
+@if $icon == yes {
+	.button:before {
+		content: "";
+		display: block;
+		@include center(vertical);
+		left: 10px;
+		width: 10px;
+		height: 10px;
+		background: red;
+	}
+}
+.button-group {
+	text-align: center;
+	word-spacing: -.26em;
+	.button {
+		margin: 0 10px 0 0;
+		&:last-child {
+			margin: 0;
+		}
+		@include respond-to($respond) {
+			display: block;
+			margin: 0 auto 15px;
+			text-align: center;
+			&:last-child {
+				margin: 0 auto 10px;
+			}
+		}
+	}
+}
+/***** End Button *****/
+//	Use tag "button" creat a button
+//    <button type="submit" class="button nameClass">Submit</button>
+//  Use tag "a" creat a button
+//    <a href="#" class="button nameClass">Submit</a>
+//  Note:
+//    Class "button(default) size color"

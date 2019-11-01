@@ -1,14 +1,174 @@
 extends ../layout/partials/base
 
 block content
-  .hf-wrapper
-    .hf-content
-      h2 Pages
-      ul
-        li
-          a(href="./home.html") Disable Caching
-      h2 Documentation
-      ul
-        li
-          a(href="./styleguide") Styleguide
-
+  article.main
+    section.region.region-1
+      .container
+        .breadcrumb
+          ul
+            li
+              a(href='#') Home
+            li
+              a(href='#') Private
+            li
+              a(href='#') Pictures
+            li.active Vacation
+    section.region.region-2
+      .container
+        .alert.danger
+          .close x
+          strong Danger!
+          |  This alert box indicates a dangerous or potentially negative action.
+    section.region.region-3
+      .container
+        form.form-horizontal(action='')
+          .form-group
+            label.label-title.required
+              span.icon Fullname
+            input.input.small(type='text' placeholder='Color is red!')
+            span.message This is error!
+          .form-group
+            label.label-title.required
+              span.icon Sex
+            .select-wrapper
+              select.select.small
+                option Selects
+                option 1
+                option This is error!
+            span.message This is error!
+          .form-group
+            label.label-title.required
+              span.icon Sex
+            .select-wrapper
+              select.select.small
+                option Selects
+                option 1
+                option This is error!
+            span.message This is error!
+          .form-group
+            label.label-title.required
+              span.icon Sex
+            .select-wrapper
+              select.select.small
+                option Selects
+                option 1
+                option This is error!
+            span.message This is error!
+          .form-group
+            label.checkbox
+              input(type='checkbox')
+              span.checkmark.small
+              ruby Red
+            label.checkbox
+              input(type='checkbox')
+              span.checkmark.small
+              ruby Blue
+            label.checkbox
+              input(type='checkbox')
+              span.checkmark.small
+              ruby Red
+            label.checkbox
+              input(type='checkbox')
+              span.checkmark.small
+              ruby Blue
+          .form-group
+            label.checkbox
+              input(type='checkbox')
+              span.checkmark.medium
+              ruby Yellow
+          .form-group
+            label.radio
+              input(type='radio' checked='checked' name='radio')
+              span.radiomark.small
+              ruby Male
+            label.radio
+              input(type='radio' name='radio')
+              span.radiomark.small
+              ruby Female
+          .button-group
+            a.button.large.primary(type='submit' value='Submit') Submit
+            button.button.large.secondary(type='submit') Submit
+        .text-left
+          a.textlink(href='#')
+            span &nbsp;&nbsp;&nbsp;
+            | Text Link
+            span &nbsp;&nbsp;&nbsp;
+    section.region.region-4
+      .container
+        table.vertical
+          thead
+            tr
+              th(scope='col') Account
+              th(scope='col') Due Date
+              th(scope='col') Amount
+              th(scope='col') Period
+          tbody
+            tr
+              td(data-label='Account')
+                label.checkbox
+                  input(type='checkbox')
+                  span.checkmark.small
+              td(data-label='Due Date') 04/01/2016
+              td(data-label='Amount') $1,190
+              td(data-label='Period') 03/01/2016 - 03/31/2016
+            tr
+              td(scope='row' data-label='Account')
+                label.checkbox
+                  input(type='checkbox')
+                  span.checkmark.small
+              td(data-label='Due Date') 03/01/2016
+              td(data-label='Amount') $2,443
+              td(data-label='Period') 02/01/2016 - 02/29/2016
+            tr
+              th(colspan='4') &aacute;
+            tr
+              td(scope='row' data-label='Account')
+                label.checkbox
+                  input(type='checkbox')
+                  span.checkmark.small
+              td(data-label='Due Date') 03/01/2016
+              td(data-label='Amount') $1,181
+              td(data-label='Period') 02/01/2016 - 02/29/2016
+            tr
+              td(scope='row' data-label='Acount')
+                label.checkbox
+                  input(type='checkbox')
+                  span.checkmark.small
+              td(data-label='Due Date') 02/01/2016
+              td(data-label='Amount') $842
+              td(data-label='Period') 01/01/2016 - 01/31/2016
+    section.region.region-5
+      .container
+        table.horizontal
+          tbody
+            tr
+              th Account
+              td
+                | Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam quam repellat unde similique ab Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam quam repellat unde similique ab Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam quam repellat unde similique ab
+            tr
+              th Account
+              td Visa - 3412
+    section.region.region-6
+      .container
+        .tab
+          ul.tabs-list
+            li.active Users
+            li Account
+            li Amount
+          .tab-content
+            div
+              | Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam quam repellat unde similique ab, illum aperiam sapiente veniam, distinctio minus ratione quas voluptate officia minima ipsam accusantium ducimus nesciunt. Temporibus.Quisquam quam repellat unde similique ab, illum aperiam sapiente veniam, distinctio minus ratione quas voluptate officia minima ipsam accusantium ducimus nesciunt.
+            div
+              | Aliquid dignissimos facilis veniam assumenda magni tenetur sint dolore sit quia aspernatur a voluptate natus sequi deserunt repellendus at pariatur autem cupiditate delectus quis repellat, laudantium perspiciatis dicta. Omnis, ipsum quo! Fugiat eveniet unde laboriosam?Quisquam quam repellat unde similique ab, illum aperiam sapiente veniam, distinctio minus ratione quas voluptate officia minima ipsam accusantium ducimus nesciunt.
+            div
+              | Tempore eum explicabo officia, sequi culpa aliquid impedit nisi voluptatum blanditiis assumenda eaque ducimus eius reprehenderit tempora provident quae? Doloremque ea explicabo minus, odit excepturi accusantium quia, eaque necessitatibus itaque nisi hic natus.Quisquam quam repellat unde similique ab, illum aperiam sapiente veniam, distinctio minus ratione quas voluptate officia minima ipsam accusantium
+    section.region.region-7
+      .pagination
+        a(href='#') &laquo;
+        a(href='#') 1
+        a(href='#') 2
+        a(href='#') 3
+        a(href='#') 4
+        a(href='#') 5
+        a(href='#') &raquo;
+  aside

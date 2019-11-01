@@ -1,0 +1,57 @@
+/***** Scrollback *****/
+.scroll-back {
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	width: 32px;
+	height: 32px;
+	border: 0;
+	border-radius: 0;
+	background: $primary;
+	color: $white;
+	text-align: center;
+	cursor: pointer;
+	text-decoration: none;
+	@include  css3-prefix(transition, (all .2s ease-out));
+	visibility: hidden;
+	opacity: 0;
+	z-index: 9999;
+	&::after {
+		content: '';
+		display: block;
+		@include center(both);
+		width: 16px;
+		height: 16px;
+		background: $black;
+	}
+	&.show {
+		visibility: visible;
+    opacity: 1;
+	}
+	&:hover {background: $secondary;}
+}
+/***** End Scrollback *****/
+// 	HTML 
+//		<a class="scrollback">&uarr;</a>
+// 	Script
+//	if ($('.scrollback').length) {
+//		var scrollTrigger = 100,
+//			scrollback = function () {
+//				var scrollTop = $(window).scrollTop();
+//				if (scrollTop > scrollTrigger) {
+//					$('.scrollback').addClass('show');
+//				} else {
+//					$('.scrollback').removeClass('show');
+//				}
+//			};
+//		scrollback();
+//		$(window).on('scroll', function () {
+//			scrollback();
+//		});
+//		$('.scrollback').on('click', function (e) {
+//			e.preventDefault();
+//			$('html,body').animate({
+//				scrollTop: 0
+//			}, 700);
+//		});
+//	}

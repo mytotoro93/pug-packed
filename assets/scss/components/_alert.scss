@@ -1,0 +1,46 @@
+/***** Alert *****/
+.alert {
+	display: none;
+	position: relative;
+	margin: 0;
+	padding: 10px 30px 10px 10px;
+	border-radius: 4px;
+	.close {
+		display: block;
+		@include center(vertical);
+		right: 10px;
+		width: 20px;
+		height: 20px;
+		text-align: center;
+		cursor: pointer;
+	}
+	@each $class, $backgorund, $border, $color in 
+	(danger, #f2dede, #ebccd1, #a94442),
+	(warning, #fcf8e3, #faebcc, #8a6d3b),
+	(success, #dff0d8, #d6e9c6, #3c763d),
+	(info, #d9edf7, #bce8f1, #31708f) {
+		&.#{$class} {
+			display: block;
+			background: #{$backgorund};
+			border: 1px solid #{$border};
+			color: #{$color};
+			strong {
+				color: #{$color};
+				font-weight: 600;
+			}
+			.close {
+				color: #{$color};
+				font-weight: 600;
+			}
+		}
+	}
+}
+/***** End Alert *****/
+//	Use tag "alert" creat a alert
+//		<div class="alert danger">
+//			<div class="close">x</div>
+//			<strong>Danger!</strong>
+//			This alert box indicates a dangerous or potentially negative action.
+//		</div>
+//  Note:
+//    Class "alert(default) type"
