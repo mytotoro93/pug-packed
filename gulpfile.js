@@ -39,7 +39,7 @@ let paths = {
   scripts: {
     src: './assets/js/*.js',
     lib: './assets/js/lib/*.js',
-    dest: './_dist/assets/js/'
+    dest: './_dist/assets/js/',
   },
   image: {
     src: './assets/img/**/*',
@@ -75,7 +75,7 @@ function scss() {
     gulp
       .src(paths.styles.src)
       .pipe(plumber({errorHandler: notify.onError("Sass Error: <%= error.message %>")}))
-      .pipe(sass({outputStyle: 'expanded'}))
+      .pipe(sass({outputStyle: 'compact'}))
       .pipe(postcss([autoprefixer(), cssnano()]))
       .pipe(gulp.dest(paths.styles.dest))
   );
@@ -86,30 +86,33 @@ function scripts() {
   .pipe(plumber({errorHandler: notify.onError("Babel Error: <%= error.message %>")}))
   .pipe(gulpif(options.sourceMaps, sourcemaps.init()))
   .pipe(gulpif(options.useBabel, babel({
-    presets: ['@babel/preset-env']
+    presets: ['@babel/preset-env'],
+    minified: false
   })))
   .pipe(concat('app.js'))
   .pipe(gulpif(options.uglifyJS, uglify()))
-  .pipe(gulpif(options.sourceMaps, sourcemaps.write(paths.scripts.dest)))
   .pipe(gulp.dest(paths.scripts.dest))
 }
 function css() {
-  return (
-    gulp
-      .src(paths.css.src)
-      .pipe(plumber())
-      .pipe(gulp.dest(paths.css.dest))
-      .pipe(browserSync.stream())
-  );
+  return gulp
+  .src(paths.css.src)
+  .pipe(plumber())
+  .pipe(gulp.dest(paths.css.dest))
+  .pipe(browserSync.stream())
+}
+function js() {
+  return gulp
+  .src(paths.scripts.lib)
+  .pipe(plumber())
+  .pipe(gulp.dest(paths.scripts.dest + '/lib/'))
+  .pipe(browserSync.stream())
 }
 function fonts() {
-  return (
-    gulp
-      .src(paths.fonts.src)
-      .pipe(plumber())
-      .pipe(gulp.dest(paths.fonts.dest))
-      .pipe(browserSync.stream())
-  );
+    return gulp
+    .src(paths.fonts.src)
+    .pipe(plumber())
+    .pipe(gulp.dest(paths.fonts.dest))
+    .pipe(browserSync.stream())
 }
 function images() {
   return gulp
@@ -148,14 +151,15 @@ function watchFiles() {
   gulp.watch(paths.styles.src, gulp.series(scss, reload));
   gulp.watch(paths.fonts.src, gulp.series(fonts, reload));
   gulp.watch(paths.css.src, gulp.series(css, reload));
+  gulp.watch(paths.css.src, gulp.series(js, reload));
   gulp.watch(paths.scripts.src, gulp.series(scripts, reload));
   gulp.watch(paths.html.src, gulp.series(pug_src, reload));
   gulp.watch(paths.image.src, gulp.series(images, reload));
 }
-const build = gulp.parallel(scripts, fonts, css, scss, images, pug_src);
+const build = gulp.parallel(scripts, fonts, css, js, scss, images, pug_src);
 const watch = gulp.series(build, gulp.parallel(watchFiles, browser));
 // Export data with product version, clean all file not use.
-const prod = gulp.series(cleanup, gulp.parallel(scripts, fonts, css, scss, images, pug_src));
+const prod = gulp.series(cleanup, gulp.parallel(scripts, fonts, css, js, scss, images, pug_src));
 
 exports.cleanup = cleanup;
 exports.watch = watch;
