@@ -30,20 +30,4 @@ form {word-spacing: -.26em;}
     clear: both;
   }
 }
-%right {
-	-webkit-transform: rotate(-45deg);
-	transform: rotate(-45deg);
-}
-%left {
-	-webkit-transform: rotate(135deg);
-	transform: rotate(135deg);
-}
-%up {
-	-webkit-transform: rotate(-135deg);
-	transform: rotate(-135deg);
-}
-%down {
-	-webkit-transform: rotate(45deg);
-	transform: rotate(45deg);
-}
 /***** End Default *****/

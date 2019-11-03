@@ -1,7 +1,6 @@
 ## Gulp / Pug / Sass Starter template.
 
 [![NPM version](https://img.shields.io/github/package-json/v/mytotoro93/pug-packed?style=flat-square)](https://github.com/mytotoro93/pug-packed)
-[![Repo size](https://img.shields.io/github/repo-size/mytotoro93/pug-packed?style=flat-square)](https://github.com/mytotoro93/pug-packed)
 [![License Status](https://img.shields.io/github/license/mytotoro93/pug-packed?style=flat-square)](https://github.com/mytotoro93/pug-packed)
 
 ### Description
@@ -28,8 +27,8 @@ This project uses:
 ### Usage
 - Execute `npm install` from base directory to install all dependencies.
 - Execute `gulp watch` to start development server.
-- Execute `gulp build` or `npm run build` to build project files.
-- Execute `gulp prod` build project files with product version.
+- Execute `gulp build` to build project files.
+- Execute `gulp prod` build project files with production version.
 
 ### Addons 
 
@@ -39,11 +38,6 @@ By default this project includes:
 - Sass
 - Bootstrap
 - Material
-- Carousel
-- Jquery Hotspot
 - Updating ...
 
 If you don`t need something - just delete it.
-
-### Errors
-- Function Babel compile library is still errors. 

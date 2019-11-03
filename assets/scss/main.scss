@@ -1,19 +1,15 @@
- // Base stuff
-@import "base/fonts";
+// Base stuff
 @import "base/reset";
 @import "base/default";
 @import "base/grid";
 // Components
-@import "components/a";
 @import "components/alert";
-@import "components/breadcrumb";
 @import "components/button";
 @import "components/checkbox";
 @import "components/input";
 @import "components/nav";
 @import "components/pagination";
 @import "components/radio";
-@import "components/scrollback";
 @import "components/select";
 @import "components/tab";
 @import "components/table";
@@ -29,3 +25,8 @@
 @import "layout/form";
 @import "layout/header";
 // SCSS pages
+/***********************************************************
+
+	End Template
+
+***********************************************************/
