@@ -27,6 +27,7 @@ const options = {
 let paths = {
   styles: {
     src: './assets/scss/*.scss',
+    com: './assets/scss/**/*.scss',
     dest: './_dist/assets/css/'
   },
   html: {
@@ -64,11 +65,18 @@ function browser(done) {
   });
   done();
 }
-function reload() {
+function reload(done) {
   browserSync.reload();
+  done();
 }
 function cleanup() {
   return del('./_dist/');
+}
+function com() {
+  return gulp
+    .src(paths.styles.com)
+    .pipe(plumber({errorHandler: notify.onError("PUG Error: <%= error.message %>")}))
+    .pipe(browserSync.stream({match: paths.styles.com}));
 }
 function scss() {
   return gulp
@@ -77,8 +85,7 @@ function scss() {
     .pipe(sass({outputStyle: 'expanded'}))
     .pipe(postcss([autoprefixer({ grid: 'autoplace' })]))
     .pipe(gulp.dest(paths.styles.dest))
-    .pipe(browserSync.stream())
-
+    .pipe(browserSync.stream({match: paths.styles.src}));
 }
 function scss_prod() {
   return gulp
@@ -88,7 +95,6 @@ function scss_prod() {
     .pipe(postcss([autoprefixer({ grid: 'autoplace' }), cssnano({ preset: 'default', })]))
     .pipe(gulp.dest(paths.styles.dest))
     .pipe(browserSync.stream())
-
 }
 function scripts() {
   return gulp
@@ -99,30 +105,40 @@ function scripts() {
       presets: ['@babel/preset-env'],
       minified: false
     })))
+    .pipe(gulp.dest(paths.scripts.dest))
+    .pipe(browserSync.stream())
+}
+function scripts_prod() {
+  return gulp
+    .src(paths.scripts.src)
+    .pipe(plumber({errorHandler: notify.onError("Babel Error: <%= error.message %>")}))
+    .pipe(gulpif(options.sourceMaps, sourcemaps.init()))
+    .pipe(gulpif(options.useBabel, babel({
+      presets: ['@babel/preset-env'],
+      minified: true
+    })))
     .pipe(concat('app.js'))
     .pipe(gulpif(options.uglifyJS, uglify()))
     .pipe(gulp.dest(paths.scripts.dest))
+    .pipe(browserSync.stream())
 }
 function css() {
   return gulp
     .src(paths.css.src)
     .pipe(plumber())
     .pipe(gulp.dest(paths.css.dest))
-    .pipe(browserSync.stream())
 }
 function js() {
   return gulp
     .src(paths.scripts.lib)
     .pipe(plumber())
     .pipe(gulp.dest(paths.scripts.dest + '/lib/'))
-    .pipe(browserSync.stream())
 }
 function fonts() {
     return gulp
       .src(paths.fonts.src)
       .pipe(plumber())
       .pipe(gulp.dest(paths.fonts.dest))
-      .pipe(browserSync.stream())
 }
 function images() {
   return gulp
@@ -143,7 +159,14 @@ function images() {
         })
       ])
     )
-  .pipe(gulp.dest(paths.image.dest));
+  .pipe(gulp.dest(paths.image.dest))
+  .pipe(browserSync.stream({match: paths.image.src}));
+}
+function par() {
+  return gulp
+    .src(paths.html.par)
+    .pipe(plumber({errorHandler: notify.onError("PUG Error: <%= error.message %>")}))
+    .pipe(browserSync.stream({match: paths.html.par}));
 }
 function pug_src() {
   return gulp
@@ -156,19 +179,16 @@ function pug_src() {
     }))
     .pipe(pug({pretty: true}))
     .pipe(gulp.dest(paths.html.dest))
+    .pipe(browserSync.stream({match: paths.html.src}));
 }
-function par() {
-  return gulp
-    .src(paths.html.par)
-    .pipe(plumber({errorHandler: notify.onError("PUG Error: <%= error.message %>")}))
-}
+
 function watchFiles() {
-  gulp.watch([paths.styles.src, paths.fonts.src, paths.css.src, paths.scripts.lib, paths.scripts.src, paths.html.src, paths.image.src, paths.html.par], gulp.series(scss, fonts, css, js, scripts, pug_src, images, par, reload))
+  gulp.watch([paths.styles.src, paths.styles.com, paths.fonts.src, paths.css.src, paths.scripts.lib, paths.scripts.src, paths.html.src, paths.image.src, paths.html.par], gulp.series( scss, com, fonts, css, js, scripts, pug_src, images, par, reload))
 }
-const build = gulp.parallel(scripts, fonts, css, js, scss, images, pug_src);
+const build = gulp.parallel(scss, scripts, fonts, css, js, images, pug_src);
 const watch = gulp.series(build, gulp.parallel(watchFiles, browser));
 // Export data with product version, clean all file not use.
-const prod = gulp.series(cleanup, gulp.parallel(scripts, fonts, css, js, scss_prod, images, pug_src));
+const prod = gulp.series(cleanup, gulp.parallel(scripts, scripts_prod, fonts, css, js, scss_prod, images, pug_src));
 
 exports.cleanup = cleanup;
 exports.watch = watch;
